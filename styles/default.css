@@ -371,7 +371,19 @@ body {
     font-size: medium;
 }
 
+/**
+ * 	The following is added by Edward Burrell for specific styling for the Civitas-CMS system.
+ */
+
 h1 {
     font-size: xx-large;
     font-weight: 900;
+}
+
+.adminMenu ul {
+	list-style: none;
+}
+
+.adminMenu li {
+	
 }

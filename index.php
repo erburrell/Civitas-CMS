@@ -205,20 +205,20 @@ class ViewController extends BaseViewController {
 		$cssName = $row['css_file'];
 		$content = $row['content'];
 
+		/**
+		 * If the user is an admin, add the admin menu to the file.
+		 */
 		$displayText = str_replace('{pTopLogin}', file_get_contents('templates/lineStyleLoginForm.html'), $pageText);
-
+		if (Member::getById(1)) {
+			$displayText = str_replace('{pAdminMenu}', file_get_contents('templates/adminMenu.html'), $displayText);
+		} else {
+			$displayText = str_replace('{pAdminMenu}', '', $displayText);
+		}
 		$displayText = str_replace('{pAction}', 'index.php', $displayText);
 		$displayText = str_replace('{pTitle}', $title, $displayText);
 		$displayText = str_replace('{pCssRef}', $cssName, $displayText);
 		$displayText = str_replace('{pContent}', $content, $displayText);
 		
-		//Test For Member Class.
-		$displayText .= '</br>';
-		try {
-			$displayText .= print_r(Member::getById( 1 ));
-		} catch (exception $ex) {
-			$displayText .= $ex->getMessage();
-		}
 		return $displayText;
 	}
 
