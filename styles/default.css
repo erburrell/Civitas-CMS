@@ -385,5 +385,10 @@ h1 {
 }
 
 .adminMenu li {
-	
+	list-style: none;
+	float: left;
+	width: 80px;
+	border-color: #000000;
+	border-style: solid;
+	text-align: center;
 }
