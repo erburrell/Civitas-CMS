@@ -172,6 +172,19 @@ class Member implements IData {
 	public function __ToString() {
 		return $this->username;
 	}
+	
+	public static function register( $paramArray ) {
+		$sql = 'SELECT id FROM members WHERE username=:username OR email=:email';
+		$checkUser = ConnectionClass::getInstance()->prepare($sql);
+		$success = $checkUser->execute(array(':username' => $paramArray['username'], ':email' => $paramArray['email']));
+		
+		if ($checkUser->rowCount() > 0) {
+			return $checkUser->rowCount();
+		} else {
+			return 'new user';
+		}
+		
+	}
 }
 
 /**
@@ -218,12 +231,15 @@ class ViewController extends BaseViewController {
 		$displayText = str_replace('{pTitle}', $title, $displayText);
 		$displayText = str_replace('{pCssRef}', $cssName, $displayText);
 		$displayText = str_replace('{pContent}', $content, $displayText);
-		
+		$displayText .= '</br>';
+		$displayText .= Member::register( array( 'username' => 'adminBill', 'email' => 'adminBill@manoutdoors.com' ));
 		return $displayText;
 	}
 
 }
-
+if ($_POST['register'] == 'register') {
+	header("Location: http://localhost/~rburrell/Civitas-CMS/templates/registration.php");
+}
 
 if ($_GET['node'] == NULL) {
 	echo ViewController::getView(1);
